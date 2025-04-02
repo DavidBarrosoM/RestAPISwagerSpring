@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 @Entity
 public class Proyect implements Serializable{
+	
 	@Id
 	private long id;
 	private String description;
@@ -35,6 +36,14 @@ public class Proyect implements Serializable{
 		return open;
 	}
 	public void setOpen(boolean open) {
+		this.open = open;
+	}
+	
+	public Proyect(long id, String description, String language, boolean open) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.language = language;
 		this.open = open;
 	}
 	

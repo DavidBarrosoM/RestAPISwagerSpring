@@ -2,7 +2,11 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+@Entity
 public class Code implements Serializable{
+	@Id
 	private long id;
 	private String Package;
 	private String File; 
