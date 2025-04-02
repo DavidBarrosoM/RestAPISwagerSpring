@@ -34,4 +34,5 @@ public class Servicio {
 	public void eliminaProyecto(Long id) {
 		proyectos.remove(id);
 	}
+	
 }
