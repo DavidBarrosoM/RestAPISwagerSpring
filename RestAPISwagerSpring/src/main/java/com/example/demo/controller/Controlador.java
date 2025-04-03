@@ -33,12 +33,15 @@ import com.example.demo.Repositories.RepositorioProyect;
 import com.example.demo.model.Code;
 import com.example.demo.model.Proyect;
 import com.example.demo.service.Servicio;
+import com.example.demo.service.ServicioCode;
 
 @RestController
 @Tag(name = "Proyectos API")
 public class Controlador {
 	@Autowired
 	Servicio servicio;
+	@Autowired
+	ServicioCode servicioCode;
 	
 	@Operation(summary = "Crear proyecto", description = "Devuelve el proyecto creado y el codigo de respuesta")
 	@ApiResponses(value = {
@@ -52,6 +55,7 @@ public class Controlador {
     	}
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(proyecto);
     }
+	
 	@GetMapping(value="/proyect/{id}", produces="application/json")
 	@Operation(summary = "Obten proyect por id", description = "Devuelve un proyecto por id")
 	@ApiResponses(value = {
@@ -106,11 +110,18 @@ public class Controlador {
 	    })
     @PostMapping("/code")
     public ResponseEntity<?> createCode(@RequestBody Code codigo) {
-    	if(servicio.agregarCodigo(codigo)) {
+    	if(servicioCode.create(codigo)!=null) {
     		return ResponseEntity.status(HttpStatus.CREATED).body(codigo);
     	}
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(codigo);
     }
-    
+	@Operation(summary = "Obten codigos", description = "Devuelve todos los codigos")
+	@ApiResponses(value = {
+	        @ApiResponse(responseCode = "200", description = "Devuelto correctamente")
+	    })
+    @GetMapping("/code")
+    public ResponseEntity<List<Code>> getCodigosAll() {
+        return ResponseEntity.ok(servicioCode.readAll());
+    }
     
 }

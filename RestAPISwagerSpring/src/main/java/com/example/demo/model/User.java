@@ -2,15 +2,21 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+@Entity
 public class User implements Serializable{
-	private Long id;
+	@Id
+	@Schema(name = "idUser", example = "1", required = true)
+	private Long idUser;
 	private String nick;
 	private String name;
 	public Long getId() {
-		return id;
+		return idUser;
 	}
 	public void setId(Long id) {
-		this.id = id;
+		this.idUser = id;
 	}
 	public String getNick() {
 		return nick;
@@ -22,6 +28,12 @@ public class User implements Serializable{
 		return name;
 	}
 	public void setName(String name) {
+		this.name = name;
+	}
+	public User(Long idUser, String nick, String name) {
+		super();
+		this.idUser = idUser;
+		this.nick = nick;
 		this.name = name;
 	}
 	
