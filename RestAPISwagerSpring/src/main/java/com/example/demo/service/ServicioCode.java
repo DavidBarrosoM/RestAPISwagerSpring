@@ -12,13 +12,15 @@ public class ServicioCode implements Repositorio<Code>{
 
 	@Override
 	public Code findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return codigos.get(id);
 	}
 
 	@Override
-	public Code update(Code entity, Long id) {
-		// TODO Auto-generated method stub
+	public Code update(Code c, Long id) {
+		if(codigos.containsKey(id)) {
+			c.setId(id);
+			return codigos.put(id,c);
+		}
 		return null;
 	}
 
@@ -39,7 +41,6 @@ public class ServicioCode implements Repositorio<Code>{
 
 	@Override
 	public List<Code> readAll() {
-		// TODO Auto-generated method stub
 		return new ArrayList<>(codigos.values());
 	}
 	

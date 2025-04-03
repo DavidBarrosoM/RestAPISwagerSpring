@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.service.ServicioUser;
-import com.example.demo.model.User;
+import com.example.demo.model.Code;
+import com.example.demo.model.Proyect;
+import com.example.demo.service.ServicioCode;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,21 +25,21 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @Tag(name = "Proyectos API")
-@RequestMapping("/user")
-public class ControladorUser {
+@RequestMapping("/code")
+public class ControladorCode {
 	@Autowired
-	ServicioUser servicio;
+	ServicioCode servicio;
 	
 	@GetMapping
-	@Operation(summary = "Obten users", description = "Devuelve todos los usuarios")
+	@Operation(summary = "Obten codes", description = "Devuelve todos los codigos")
 	@ApiResponses(value = {
 	        @ApiResponse(responseCode = "200", description = "Devuelto correctamente")
 	    })
-	public ResponseEntity<List<User>> findAll(){
+	public ResponseEntity<List<Code>> findAll(){
 		return ResponseEntity.ok(servicio.readAll());
 	}
 	
-	@Operation(summary = "Borra user por id", description = "Devuelve si lo ha borrado o no")
+	@Operation(summary = "Borra code por id", description = "Devuelve si lo ha borrado o no")
 	@ApiResponses(value = {
 	        @ApiResponse(responseCode = "200", description = "Borrado correctamente"),
 	        @ApiResponse(responseCode = "404", description = "Not found - El proyect no se ha encontrado")
@@ -57,20 +58,21 @@ public class ControladorUser {
 	        @ApiResponse(responseCode = "400", description = "Bad Request - Fallo de sintaxis en uno de los campos")
 	    })
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User usuario) {
-    	if(servicio.create(usuario)!=null) {
-    		return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+    public ResponseEntity<?> createCode(@RequestBody Code codigo) {
+    	if(servicio.create(codigo)!=null) {
+    		return ResponseEntity.status(HttpStatus.CREATED).body(codigo);
     	}
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(usuario);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(codigo);
     }
 	
 	@GetMapping(value="/{id}", produces="application/json")
-	@Operation(summary = "Obten user por id", description = "Devuelve un user por id")
+	@Operation(summary = "Obten code por id", description = "Devuelve un code por id")
 	@ApiResponses(value = {
 	        @ApiResponse(responseCode = "200", description = "Devuelto correctamente"),
-	        @ApiResponse(responseCode = "404", description = "Not found - El user no se ha encontrado")
+	        @ApiResponse(responseCode = "404", description = "Not found - El code no se ha encontrado")
 	    })
-    public ResponseEntity<User> getUsertById(@PathVariable("id") @Parameter(name = "id") Long id) {
+    public ResponseEntity<Code> getCodetById(@PathVariable("id") @Parameter(name = "id") Long id) {
+        //retrieval logic
         return ResponseEntity.ok(servicio.findById(id));
     }
 }

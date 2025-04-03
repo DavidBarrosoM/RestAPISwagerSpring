@@ -11,8 +11,7 @@ public class ServicioUser implements Repositorio<User> {
 	HashMap<Long,User> usuarios = new HashMap<>();
 	@Override
 	public User create(User u) {
-		// TODO Auto-generated method stub
-		return null;
+		return usuarios.put((long)usuarios.size(),u);
 	}
 
 	@Override
@@ -22,20 +21,25 @@ public class ServicioUser implements Repositorio<User> {
 
 	@Override
 	public User findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return usuarios.get(id);
 	}
 
 	@Override
 	public User update(User u, Long id) {
-		// TODO Auto-generated method stub
+		if(usuarios.containsKey(id)) {
+			u.setId(id);
+			return usuarios.put(id,u);
+		}
 		return null;
 	}
 
 	@Override
 	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
-		return true;
+		if(usuarios.containsKey(id)) {
+			usuarios.remove(id);
+			return true;
+		}
+		return false;
 	}
 
 }

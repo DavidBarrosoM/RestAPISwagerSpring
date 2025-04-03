@@ -34,29 +34,29 @@ import com.example.demo.model.Code;
 import com.example.demo.model.Proyect;
 import com.example.demo.service.Servicio;
 import com.example.demo.service.ServicioCode;
+import com.example.demo.service.ServicioProyect;
 
 @RestController
+@RequestMapping("/proyect")
 @Tag(name = "Proyectos API")
 public class Controlador {
 	@Autowired
-	Servicio servicio;
-	@Autowired
-	ServicioCode servicioCode;
+	ServicioProyect servicio;
 	
 	@Operation(summary = "Crear proyecto", description = "Devuelve el proyecto creado y el codigo de respuesta")
 	@ApiResponses(value = {
 	        @ApiResponse(responseCode = "201", description = "Created - Proyect creado"),
 	        @ApiResponse(responseCode = "400", description = "Bad Request - Fallo de sintaxis en uno de los campos")
 	    })
-    @PostMapping("/proyect")
+    @PostMapping
     public ResponseEntity<?> createProyect(@RequestBody Proyect proyecto) {
-    	if(servicio.agregarProyecto(proyecto)) {
+    	if(servicio.create(proyecto)!=null) {
     		return ResponseEntity.status(HttpStatus.CREATED).body(proyecto);
     	}
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(proyecto);
     }
 	
-	@GetMapping(value="/proyect/{id}", produces="application/json")
+	@GetMapping(value="/{id}", produces="application/json")
 	@Operation(summary = "Obten proyect por id", description = "Devuelve un proyecto por id")
 	@ApiResponses(value = {
 	        @ApiResponse(responseCode = "200", description = "Devuelto correctamente"),
@@ -64,26 +64,26 @@ public class Controlador {
 	    })
     public ResponseEntity<Proyect> getProyectById(@PathVariable("id") @Parameter(name = "id") Long id) {
         //retrieval logic
-        return ResponseEntity.ok(servicio.getById(id));
+        return ResponseEntity.ok(servicio.findById(id));
     }
 	
 	@Operation(summary = "Obten proyects", description = "Devuelve todos los proyectos")
 	@ApiResponses(value = {
 	        @ApiResponse(responseCode = "200", description = "Devuelto correctamente")
 	    })
-    @GetMapping("/proyect")
+    @GetMapping
     public ResponseEntity<List<Proyect>> getProyectAll() {
-        //retrieval logic
-        return ResponseEntity.ok(servicio.getAllProyectos());
+        return ResponseEntity.ok(servicio.readAll());
     }
+	
 	@Operation(summary = "Actualiza proyect por id", description = "Devuelve un proyecto por id")
 	@ApiResponses(value = {
 	        @ApiResponse(responseCode = "200", description = "Actualizado correctamente"),
 	        @ApiResponse(responseCode = "404", description = "Not found - El proyect no se ha encontrado")
 	    })
-	@PutMapping("/proyect/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> updateProyect(@PathVariable("id") @Parameter(name = "id") Long id,@RequestBody Proyect proyecto){
-		if(servicio.actualizaProyecto(proyecto,id)) {
+		if(servicio.update(proyecto,id)!= null) {
     		return ResponseEntity.status(HttpStatus.OK).body(proyecto);
     	}
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(proyecto);
@@ -94,34 +94,11 @@ public class Controlador {
 	        @ApiResponse(responseCode = "200", description = "Borrado correctamente"),
 	        @ApiResponse(responseCode = "404", description = "Not found - El proyect no se ha encontrado")
 	    })
-    @DeleteMapping("/proyect/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> borraProyectById(@PathVariable("id") @Parameter(name="id") Long id){
-		if(servicio.eliminaProyecto(id)) {
+		if(servicio.delete(id)) {
 			return ResponseEntity.status(HttpStatus.OK).body("Borrado correctamente");
 		}return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found - El proyect no se ha encontrado");
     	
-    }
-	
-	
-	@Operation(summary = "Crear código", description = "Devuelve el código creado y el código de respuesta")
-	@ApiResponses(value = {
-	        @ApiResponse(responseCode = "201", description = "Created - Code creado"),
-	        @ApiResponse(responseCode = "400", description = "Bad Request - Fallo de sintaxis en uno de los campos")
-	    })
-    @PostMapping("/code")
-    public ResponseEntity<?> createCode(@RequestBody Code codigo) {
-    	if(servicioCode.create(codigo)!=null) {
-    		return ResponseEntity.status(HttpStatus.CREATED).body(codigo);
-    	}
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(codigo);
-    }
-	@Operation(summary = "Obten codigos", description = "Devuelve todos los codigos")
-	@ApiResponses(value = {
-	        @ApiResponse(responseCode = "200", description = "Devuelto correctamente")
-	    })
-    @GetMapping("/code")
-    public ResponseEntity<List<Code>> getCodigosAll() {
-        return ResponseEntity.ok(servicioCode.readAll());
-    }
-    
+	}
 }
