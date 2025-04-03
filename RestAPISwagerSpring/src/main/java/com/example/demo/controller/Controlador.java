@@ -52,13 +52,12 @@ public class Controlador {
     	}
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(proyecto);
     }
-	
+	@GetMapping(value="/proyect/{id}", produces="application/json")
 	@Operation(summary = "Obten proyect por id", description = "Devuelve un proyecto por id")
 	@ApiResponses(value = {
 	        @ApiResponse(responseCode = "200", description = "Devuelto correctamente"),
 	        @ApiResponse(responseCode = "404", description = "Not found - El proyect no se ha encontrado")
 	    })
-    @GetMapping("/proyect/{id}")
     public ResponseEntity<Proyect> getProyectById(@PathVariable("id") @Parameter(name = "id") Long id) {
         //retrieval logic
         return ResponseEntity.ok(servicio.getById(id));
@@ -113,20 +112,5 @@ public class Controlador {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(codigo);
     }
     
-    /*@Operation(summary = "Devuelve un proyecto por id", description = "Devuelve un proyecto por id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved"), 
-            @ApiResponse(responseCode = "404", description = "Not found - El proyecto no se ha encontrado")
-        })*/
-   /* @GetMapping("/proyect/{id}")
-    public ResponseEntity<Proyect> getProduct(@PathVariable Long id) {
-        //retrieval logic
-        return ResponseEntity.ok(new Proyect());
-    }*/
-   /* @GetMapping("/proyect")
-    public ResponseEntity<ArrayList<Proyect>> buscarTodosProyectos(){
-    	//return ResponseEntity.ok(repProyect.findAll());
-    	return ResponseEntity.ok();
-
-    }*/
+    
 }
