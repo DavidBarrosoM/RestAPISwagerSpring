@@ -17,7 +17,7 @@ public class RestApiSwagerSpringApplication {
 	@Bean
 	CommandLineRunner init(Servicio service) {
 		return args ->{
-			service.agregarProyecto(new Proyect(1L,"Patatito","Java",true));
+			service.agregarProyecto(new Proyect(0L,"Patatito","Java",true));
 			
 		};
 	}

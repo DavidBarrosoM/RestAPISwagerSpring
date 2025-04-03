@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,9 +13,13 @@ public class Proyect implements Serializable{
 	
 	@Id
 	@Column(name = "ID_PROYECT")
+	@Schema(name = "idProyect", example = "1", required = true)
 	private long idProyect;
+	@Schema(name = "description", example = "Aplicacion gubernamental", required = true)
 	private String description;
+	@Schema(name = "language", example = "Java", required = true)
 	private String language;
+	@Schema(name = "open", example = "true", required = true)
 	private boolean open;
 	private Set<Code> codigos = new HashSet<Code>();
 	public Set<Code> getCodigos() {

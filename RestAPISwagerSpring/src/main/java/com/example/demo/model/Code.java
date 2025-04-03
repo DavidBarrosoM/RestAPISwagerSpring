@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.io.Serializable;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,8 +12,11 @@ import jakarta.persistence.ManyToOne;
 public class Code implements Serializable{
 	@Id
 	@Column(name = "ID_CODE")
+	@Schema(name = "idcode", example = "1", required = true)
 	private long idCode;
+	@Schema(name = "Package", example = "com.proyectname.source", required = true)
 	private String Package;
+	@Schema(name = "File", example = "Codigo.java", required = true)
 	private String File; 
 	@ManyToOne
 	@JoinColumn(name = "ID_PROYECT")
