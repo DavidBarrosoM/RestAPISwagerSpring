@@ -39,7 +39,7 @@ import com.example.demo.service.ServicioProyect;
 @RestController
 @RequestMapping("/proyect")
 @Tag(name = "Proyectos API")
-public class Controlador {
+public class ControladorProyect {
 	@Autowired
 	ServicioProyect servicio;
 	
